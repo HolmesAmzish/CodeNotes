@@ -1,0 +1,8 @@
+# Ignore all executable files in child directories
+**/*.out
+**/*.pyc
+**/*.class
+**/*.jar
+**/*.exe
+**/*.dll
+**/[!.]*
