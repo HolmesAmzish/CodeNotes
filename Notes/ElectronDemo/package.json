@@ -1,0 +1,11 @@
+{
+  "name": "electrondemo",
+  "version": "1.0.0",
+  "main": "main.js",
+  "scripts": {
+    "start": "./electron/electron ."
+  },
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
