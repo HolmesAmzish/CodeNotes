@@ -1,0 +1,78 @@
+Initial Process Queue:
+Queue: (P2, P:5, T:3) -> (P4, P:4, T:2) -> (P3, P:3, T:1) -> (P5, P:2, T:4) -> (P1, P:1, T:2) -> NULL
+
+Processor Scheduling Begins:
+
+Selected Process: P2
+Before Execution: (P2, P:5, T:3, State: READY)
+After Execution: (P2, P:4, T:2, State: READY)
+Current Process Queue State:
+Queue: (P4, P:4, T:2) -> (P2, P:4, T:2) -> (P3, P:3, T:1) -> (P5, P:2, T:4) -> (P1, P:1, T:2) -> NULL
+
+Selected Process: P4
+Before Execution: (P4, P:4, T:2, State: READY)
+After Execution: (P4, P:3, T:1, State: READY)
+Current Process Queue State:
+Queue: (P2, P:4, T:2) -> (P3, P:3, T:1) -> (P4, P:3, T:1) -> (P5, P:2, T:4) -> (P1, P:1, T:2) -> NULL
+
+Selected Process: P2
+Before Execution: (P2, P:4, T:2, State: READY)
+After Execution: (P2, P:3, T:1, State: READY)
+Current Process Queue State:
+Queue: (P3, P:3, T:1) -> (P4, P:3, T:1) -> (P2, P:3, T:1) -> (P5, P:2, T:4) -> (P1, P:1, T:2) -> NULL
+
+Selected Process: P3
+Before Execution: (P3, P:3, T:1, State: READY)
+After Execution: (P3, P:2, T:0, State: FINISHED)
+Current Process Queue State:
+Queue: (P4, P:3, T:1) -> (P2, P:3, T:1) -> (P5, P:2, T:4) -> (P1, P:1, T:2) -> NULL
+
+Selected Process: P4
+Before Execution: (P4, P:3, T:1, State: READY)
+After Execution: (P4, P:2, T:0, State: FINISHED)
+Current Process Queue State:
+Queue: (P2, P:3, T:1) -> (P5, P:2, T:4) -> (P1, P:1, T:2) -> NULL
+
+Selected Process: P2
+Before Execution: (P2, P:3, T:1, State: READY)
+After Execution: (P2, P:2, T:0, State: FINISHED)
+Current Process Queue State:
+Queue: (P5, P:2, T:4) -> (P1, P:1, T:2) -> NULL
+
+Selected Process: P5
+Before Execution: (P5, P:2, T:4, State: READY)
+After Execution: (P5, P:1, T:3, State: READY)
+Current Process Queue State:
+Queue: (P1, P:1, T:2) -> (P5, P:1, T:3) -> NULL
+
+Selected Process: P1
+Before Execution: (P1, P:1, T:2, State: READY)
+After Execution: (P1, P:0, T:1, State: READY)
+Current Process Queue State:
+Queue: (P5, P:1, T:3) -> (P1, P:0, T:1) -> NULL
+
+Selected Process: P5
+Before Execution: (P5, P:1, T:3, State: READY)
+After Execution: (P5, P:0, T:2, State: READY)
+Current Process Queue State:
+Queue: (P1, P:0, T:1) -> (P5, P:0, T:2) -> NULL
+
+Selected Process: P1
+Before Execution: (P1, P:0, T:1, State: READY)
+After Execution: (P1, P:-1, T:0, State: FINISHED)
+Current Process Queue State:
+Queue: (P5, P:0, T:2) -> NULL
+
+Selected Process: P5
+Before Execution: (P5, P:0, T:2, State: READY)
+After Execution: (P5, P:-1, T:1, State: READY)
+Current Process Queue State:
+Queue: (P5, P:-1, T:1) -> NULL
+
+Selected Process: P5
+Before Execution: (P5, P:-1, T:1, State: READY)
+After Execution: (P5, P:-2, T:0, State: FINISHED)
+Current Process Queue State:
+Queue: NULL
+
+All processes have finished execution.
