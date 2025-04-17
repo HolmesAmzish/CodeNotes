@@ -30,6 +30,11 @@ PCB* create_pcb(const char* name, int required_time) {
     return new_pcb;
 }
 
+/**
+ * Read processes info from csv file
+ * @param head Pointer to the head of the PCB linked list
+ * @return Number of processes read
+ */
 int readProcessesFromCSV(PCB** head, const char* filename) {
     FILE* file = fopen(filename, "r");
     if (file == NULL) {
