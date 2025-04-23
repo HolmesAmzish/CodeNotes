@@ -4,7 +4,10 @@ curl https://api.deepseek.com/chat/completions \
   -d '{
     "model": "deepseek-chat",
     "messages": [
-      {"role": "user", "content": "请用中文回答：什么是人工智能？"}
+      {
+        "role": "user",
+        "content": "请用中文回答：什么是人工智能？"
+      }
     ],
     "stream": false
   }'

@@ -5,7 +5,18 @@
 **/*.jar
 **/*.exe
 **/*.dll
+
+
+
+# 
 **/*.zip
 **/*.tar
 **/*.gz
 **/*.tgz
+
+/asset
+
+# Audio
+**/*.m4a
+**/*.mp3
+**/*.wav

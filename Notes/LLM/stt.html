@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>语音输入消息</title>
+    <style>
+        body { font-family: sans-serif; margin: 20px; }
+        #message-container { border: 1px solid #ccc; padding: 10px; margin-bottom: 10px; min-height: 50px; }
+        #message-input { width: 100%; box-sizing: border-box; margin-bottom: 10px; padding: 8px; }
+        button { padding: 8px 15px; cursor: pointer; }
+        #status { margin-top: 10px; font-size: 0.9em; color: gray; }
+    </style>
+</head>
+<body>
+    <h1>语音输入消息</h1>
+
+    <div id="message-container">
+        <textarea id="message-input" placeholder="在这里输入消息"></textarea>
+    </div>
+
+    <button id="startButton">开始语音输入</button>
+    <button id="stopButton" disabled>停止语音输入</button>
+    <button id="sendButton">发送消息</button>
+
+    <div id="status"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+    const messageInput = document.getElementById('message-input');
+    const startButton = document.getElementById('startButton');
+    const stopButton = document.getElementById('stopButton');
+    const sendButton = document.getElementById('sendButton');
+    const statusElement = document.getElementById('status');
+
+    let recognition;
+    let finalTranscript = '';
+    let isListening = false;
+
+    // 检查浏览器是否支持 Web Speech API
+    if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+        const SpeechRecognition = window.webkitSpeechRecognition || window.SpeechRecognition;
+        recognition = new SpeechRecognition();
+        recognition.lang = 'zh-CN';
+        recognition.interimResults = true;
+        recognition.continuous = true; // 设置为 false，用户说完一段话后停止
+
+        recognition.onstart = () => {
+            isListening = true;
+            statusElement.textContent = '正在聆听...';
+            startButton.disabled = true;
+            stopButton.disabled = false;
+        };
+
+        recognition.onresult = (event) => {
+            let interimTranscript = '';
+            for (let i = event.resultIndex; i < event.results.length; ++i) {
+                if (event.results[i].isFinal) {
+                    finalTranscript += event.results[i][0].transcript;
+                } else {
+                    interimTranscript += event.results[i][0].transcript;
+                }
+            }
+            messageInput.value = finalTranscript + interimTranscript;
+        };
+
+        recognition.onend = () => {
+            isListening = false;
+            statusElement.textContent = '语音输入已停止';
+            startButton.disabled = false;
+            stopButton.disabled = true;
+        };
+
+        recognition.onerror = (event) => {
+            isListening = false;
+            console.error('语音识别发生错误:', event.error);
+            statusElement.textContent = `语音识别错误: ${event.error}`;
+            startButton.disabled = false;
+            stopButton.disabled = true;
+        };
+
+        startButton.addEventListener('click', () => {
+            finalTranscript = '';
+            messageInput.value = '';
+            try {
+                recognition.start();
+            } catch (error) {
+                console.error("启动语音识别失败:", error);
+                statusElement.textContent = `启动语音识别失败: ${error.message}`;
+                startButton.disabled = false;
+                stopButton.disabled = true;
+            }
+        });
+
+        stopButton.addEventListener('click', () => {
+            recognition.stop();
+        });
+    } else {
+        statusElement.textContent = '您的浏览器不支持 Web Speech API，请尝试使用最新版本的 Chrome 或 Edge。';
+        startButton.disabled = true;
+        stopButton.disabled = true;
+    }
+
+    sendButton.addEventListener('click', () => {
+        const messageText = messageInput.value.trim();
+        if (messageText) {
+            const jsonData = { message: messageText };
+            const apiUrl = '/api/messages'; // 替换为您的后端 API 端点
+
+            fetch(apiUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(jsonData),
+            })
+            .then(response => response.json()) // 或 response.text()，取决于您的 API 返回
+            .then(data => {
+                statusElement.textContent = '消息发送成功！后端响应: ' + JSON.stringify(data);
+                messageInput.value = ''; // 清空输入框
+            })
+            .catch(error => {
+                console.error('发送消息失败:', error);
+                statusElement.textContent = '消息发送失败，请重试。';
+            });
+        } else {
+            statusElement.textContent = '请输入消息后再发送。';
+        }
+    });
+});
+    </script>
+</body>
+</html>
