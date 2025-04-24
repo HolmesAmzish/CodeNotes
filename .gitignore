@@ -20,3 +20,5 @@
 **/*.m4a
 **/*.mp3
 **/*.wav
+
+Notes/LLM/mcp-client/.env
