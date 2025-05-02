@@ -22,3 +22,13 @@
 **/*.wav
 
 Notes/LLM/mcp-client/.env
+
+# models
+**/*.ckpt
+**/*.safetensors
+**/*.bin
+**/*.pt
+**/*.onnx
+**/*.h5
+**/*.pth
+**/*.pkl
