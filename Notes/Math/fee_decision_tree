@@ -1,0 +1,42 @@
+// 手续费计算判定树
+digraph {
+	rankdir=TB
+	A [label="交易总金额"]
+	B [label="<1000?"]
+	A -> B
+	C [label="每股售价"]
+	B -> C [label="是"]
+	D [label="<14?"]
+	C -> D
+	E [label="基本手续费=8.4%"]
+	D -> E [label="是"]
+	F [label="14-25?"]
+	C -> F
+	F -> E [label="是"]
+	G [label="基本手续费=8.4%"]
+	F -> G [label="否"]
+	G -> E
+	H [label="股数是否100倍数？"]
+	C -> H
+	I [label="附加手续费=5%/2%/1%"]
+	H -> I [label="是"]
+	J [label="附加手续费=9%/6%/4%"]
+	H -> J [label="否"]
+	R [label="1000-10000?"]
+	B -> R [label="否"]
+	S [label="基本手续费=5%+34"]
+	R -> S [label="是"]
+	T [label="基本手续费=4%+134"]
+	R -> T [label="否"]
+	T [label="基本手续费=4%+134"]
+	A -> T [label=">10000?" style=dashed]
+	K [label="附加手续费"]
+	I -> K [label="5%/2%/1%"]
+	J -> K [label="9%/6%/4%"]
+	Q [label="最终手续费=总金额×(基本手续费+附加手续费)"]
+	E -> Q [style=invis]
+	G -> Q [style=invis]
+	S -> Q [style=invis]
+	T -> Q [style=invis]
+	K -> Q
+}
